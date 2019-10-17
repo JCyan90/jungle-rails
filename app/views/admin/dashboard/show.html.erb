@@ -2,13 +2,14 @@
   <h1>Admin &raquo; Dashboard</h1>
 </header>
 
-<ul class="list-group">
-  <li class="list-group-item">
-    <span class="badge"><%= @product_count %></span>
-    Products
-  </li>
-  <li class="list-group-item">
-    <span class="badge"><%= @category_count %></span>
-    Categories
-  </li>
-</ul>
+<div class="dashboard"
+  <ul class="list-group">
+    <li class="list-group-item">
+      <span class="badge"><%= @products.count %></span>
+      Products
+    </li>
+    <li class="list-group-item">
+      <span class="badge"><%= @categories.count %></span>
+      Categories
+    </li>
+  </ul>
