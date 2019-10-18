@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     root to: 'dashboard#show'
     resources :products, except: [:edit, :update, :show]
     resources :categories, only: [:index, :create, :new]
-    resources :sales, only: [:index]
+    resources :sales, only: [:index, :new]
   end
 
   # These routes will be for signup. The first renders a form in the browse, the second will receive the form and create a user in ourdatabase using the data given to us by the user.
