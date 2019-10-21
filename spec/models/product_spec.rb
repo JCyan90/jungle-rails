@@ -2,38 +2,34 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
   describe 'Validations' do
+    subject { described_class.new(name: "Test", price: 1000, quantity: 5, category: Category.new) }
+    
     it 'is valid with valid attributes' do
-      @category = Category.new
-      @product = Product.new(name: 'Test', price: 1000, quantity: 5, category: @category)
-      expect(@product).to be_valid
+      expect(subject).to be_valid
     end
 
     it 'is not valid without a name' do
-      @category = Category.new
-      @product = Product.new(price: 1000, quantity: 5, category: @category)
-      expect(@product).to_not be_valid
-      expect(@product.errors.full_messages.first).to eq "Name can't be blank"
+      subject.name = nil
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages.first).to eq "Name can't be blank"
     end
 
     it 'is not valid without a price' do
-      @category = Category.new
-      @product = Product.new(name: 'Test', quantity: 5, category: @category)
-      expect(@product).to_not be_valid
-      expect(@product.errors.full_messages.second).to eq "Price is not a number"
+      subject.price_cents = nil
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages.second).to eq "Price is not a number"
     end
 
     it 'is not valid without a quantity' do
-      @category = Category.new
-      @product = Product.new(name: 'Test', price: 1000, category: @category)
-      expect(@product).to_not be_valid
-      expect(@product.errors.full_messages.first).to eq "Quantity can't be blank"
+      subject.quantity = nil
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages.first).to eq "Quantity can't be blank"
     end
 
     it 'is not valid without a category' do
-      @category = Category.new
-      @product = Product.new(name: 'Test', price: 1000, quantity: 5)
-      expect(@product).to_not be_valid
-      expect(@product.errors.full_messages.first).to eq "Category can't be blank"
+      subject.category = nil
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages.first).to eq "Category can't be blank"
     end
   end
 end
