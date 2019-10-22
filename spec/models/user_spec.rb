@@ -67,4 +67,30 @@ RSpec.describe User, type: :model do
       expect(@new_user).to_not be_valid
     end
   end
+
+  describe '.authenticate_with_credentials' do
+    it 'is valid with the correct attributes' do
+      @user = User.new(first_name: "test", last_name: "test", email: "test", password: "password", password_confirmation: "password")
+      expect(@user).to be_valid
+      @user.save
+      @user2 = User.authenticate_with_credentials('test', 'password')
+      expect(@user2).to_not be nil
+    end
+
+    it 'is not valid with a non existing email' do
+      @user = User.new(first_name: "test", last_name: "test", email: "test", password: "password", password_confirmation: "password")
+      expect(@user).to be_valid
+      @user.save
+      @user2 = User.authenticate_with_credentials('email', 'password')
+      expect(@user2).to be nil
+    end
+
+    it 'is not valid with an incorrect password' do
+      @user = User.new(first_name: "test", last_name: "test", email: "test", password: "password", password_confirmation: "password")
+      expect(@user).to be_valid
+      @user.save
+      @user2 = User.authenticate_with_credentials('test', 'wrong_password')
+      expect(@user2).to be nil
+    end
+  end
 end
