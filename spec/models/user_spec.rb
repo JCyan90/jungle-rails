@@ -92,5 +92,21 @@ RSpec.describe User, type: :model do
       @user2 = User.authenticate_with_credentials('test', 'wrong_password')
       expect(@user2).to be nil
     end
+
+    it 'is valid with an email with spaces around' do
+      @user = User.new(first_name: "test", last_name: "test", email: "test", password: "password", password_confirmation: "password")
+      expect(@user).to be_valid
+      @user.save
+      @user2 = User.authenticate_with_credentials('  test   ', 'password')
+      expect(@user2).to_not be nil
+    end
+
+    it 'is valid with an email with different cases' do
+      @user = User.new(first_name: "test", last_name: "test", email: "test", password: "password", password_confirmation: "password")
+      expect(@user).to be_valid
+      @user.save
+      @user2 = User.authenticate_with_credentials('TEsT', 'password')
+      expect(@user2).to_not be nil
+    end
   end
 end
