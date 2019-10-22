@@ -7,9 +7,9 @@ class User < ActiveRecord::Base
   # This validation serves for the tests. Without validation, a nil value would mean that the confirmation is not needed and thus a user would be created
   validates :password_confirmation, presence: true, length: { minimum: 5 }
 
-  # Check if the user exists, and check if the password if correct. Return the user instance or nil.
+  # Check if the user exists by checking the email in the database, and check if the password if correct. Return the user instance or nil.
   def self.authenticate_with_credentials(email, password)
-    @user = User.find_by(email: email).try(:authenticate, password)
+    @user = User.find_by(email: email.strip.downcase).try(:authenticate, password)
     if @user
       @user
     else
