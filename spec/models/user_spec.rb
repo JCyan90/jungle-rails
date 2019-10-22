@@ -40,12 +40,25 @@ RSpec.describe User, type: :model do
 
   describe 'email' do
     it 'is not valid without an email' do
-    end
-    
-    it 'is not valid with an already existing email address' do
+      @user = User.new(first_name: "test", last_name: "test", password: "test", password_confirmation: "test")
+      expect(@user).to_not be_valid
+      expect(@user.errors.full_messages.first).to eq "Email can't be blank"
     end
 
-    it 'is valid with the same email but different cases' do
+    it 'is not valid with an already existing email address' do
+      @user = User.new(first_name: "test", last_name: "test", email: "test", password: "test", password_confirmation: "test")
+      expect(@user).to be_valid
+      @user.save
+      @new_user = User.new(first_name: "test2", last_name: "test2", email: "test", password: "test", password_confirmation: "test")
+      expect(@new_user).to_not be_valid
+    end
+
+    it 'is not valid with the same email but different cases' do
+      @user = User.new(first_name: "test", last_name: "test", email: "test", password: "test", password_confirmation: "test")
+      expect(@user).to be_valid
+      @user.save
+      @new_user = User.new(first_name: "test2", last_name: "test2", email: "TEST", password: "test", password_confirmation: "test")
+      expect(@new_user).to_not be_valid
     end
   end
 end
