@@ -19,7 +19,7 @@ RSpec.feature "Visitor navigates from the home page to the product detail page b
   scenario "They see the product page after clicking on it from the homepage" do
     visit root_path
 
-    find('a.btn-default', match: :first).click
+    find('.btn-default', match: :first).click
 
     expect(page).to have_css 'article.product-detail'
 
